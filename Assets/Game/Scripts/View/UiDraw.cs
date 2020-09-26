@@ -4,15 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI.Extensions;
 using Game.Scripts.Extensions;
+using PathCreation;
+using ProBuilder2.Common;
+using System.Linq;
 
 namespace Game.Scripts.View
 {
+    public delegate void LineDrawDelegate(List<Vector2> controlPoints);
     public class UiDraw : MonoBehaviour
     {
+        public static event LineDrawDelegate LineDrew;
+
         [SerializeField] private InputController _input;
         [SerializeField] private UILineTextureRenderer _lineRenderer;
 
-        public float TwoPointMaxDis = 75f;
+        public float TwoPointMaxDis = 1f;
 
         private List<Vector2> _touchPositions = new List<Vector2>();
 
@@ -41,7 +47,7 @@ namespace Game.Scripts.View
                 {
                     if (_touchPositions.Count > 5)
                     {
-                        //CrateCar(touchPositions);
+                        LineDrew?.Invoke(_touchPositions);
                     }
                     else
                     {
