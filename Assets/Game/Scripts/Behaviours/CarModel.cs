@@ -1,12 +1,18 @@
 ﻿using ProBuilder2.Common;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Scripts.Extensions;
 using UnityEngine;
 
 namespace Game.Scripts.Behaviours
 {
     public class CarModel : MonoBehaviour
     {
+        [SerializeField] private Transform _frontWheels;
+        [SerializeField] private Transform _backWheels;
+
+        private List<Vector2> _controlPoints;
+
         private MeshFilter _meshFilter;
         private MeshRenderer _meshRenderer;
         private MeshCollider _meshCollider;
@@ -28,6 +34,8 @@ namespace Game.Scripts.Behaviours
 
         public void CreateMesh(List<Vector2> points)
         {
+            _controlPoints = points;
+
             var bezierPoints = CreateBezierList(points);
             _pbBezierShape.m_Points = bezierPoints;
             _pbBezierShape.m_Radius = 25;
@@ -37,6 +45,8 @@ namespace Game.Scripts.Behaviours
             Mesh sharedMesh = _meshFilter.sharedMesh;
             _meshCollider.sharedMesh = sharedMesh;
             _meshCollider.convex = true;
+
+
         }
 
         private List<pb_BezierPoint> CreateBezierList(List<Vector2> points)
@@ -49,16 +59,13 @@ namespace Game.Scripts.Behaviours
             return beizerPoints;
         }
 
-        public void PlaceWheels(Transform parent, pb_BezierShape pathObject)
+        public void PlaceWheels()
         {
-            //Vector3 frontPos = pathObject.m_Points[pathObject.m_Points.Count - 1].position * parent.localScale.x;
-            //frontPos.z = frontPos.x;
-            //frontPos.x = 0;
-            //Vector3 backPos = pathObject.m_Points[0].position * 0.005f;
-            //backPos.z = backPos.x;
-            //backPos.x = 0;
-            //GameManager.ins.car.frontWheels.localPosition = frontPos;
-            //GameManager.ins.car.backWheels.localPosition = backPos;
+            var back = _controlPoints.First();
+            var front = _controlPoints.Last();
+
+            _backWheels.transform.position = new Vector3(0, back.y, back.x) * transform.lossyScale.x;
+            _frontWheels.transform.position = new Vector3(0, front.y, front.x) * transform.lossyScale.x;
         }
     }
 }

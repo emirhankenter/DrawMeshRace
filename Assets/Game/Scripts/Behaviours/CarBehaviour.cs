@@ -16,8 +16,6 @@ namespace Game.Scripts.Behaviours
         [SerializeField] private Rigidbody _rigidBody;
 
         [SerializeField] private CarModel _carModel;
-        [SerializeField] private Transform _frontWheels;
-        [SerializeField] private Transform _backWheels;
         [SerializeField] private WheelCollider[] _wheels;
 
         private void Awake()
@@ -41,12 +39,7 @@ namespace Game.Scripts.Behaviours
         private void OnLineDrew(List<Vector2> controlPoints)
         {
             _carModel.CreateMesh(controlPoints);
-
-            var back = controlPoints.First();
-            var front = controlPoints.Last();
-
-            _backWheels.transform.position = new Vector3(0, back.y, back.x) * _carModel.transform.lossyScale.x;
-            _frontWheels.transform.position = new Vector3(0, front.y, front.x) * _carModel.transform.lossyScale.x;
+            _carModel.PlaceWheels();
         }
 
         private bool IsGround()
