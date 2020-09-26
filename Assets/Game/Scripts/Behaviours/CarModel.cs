@@ -22,13 +22,13 @@ namespace Game.Scripts.Behaviours
             _meshCollider = gameObject.GetComponent<MeshCollider>();
 
             _pbObject = gameObject.AddComponent<pb_Object>();
-            _pbBezierShape = gameObject.AddComponent<pb_BezierShape>();
             _pbEntity = gameObject.AddComponent<pb_Entity>();
+            _pbBezierShape = gameObject.AddComponent<pb_BezierShape>();
         }
 
         public void CreateMesh(List<Vector2> points)
         {
-            var bezierPoints = BeizerListCreate(points);
+            var bezierPoints = CreateBezierList(points);
             _pbBezierShape.m_Points = bezierPoints;
             _pbBezierShape.m_Radius = 25;
             _pbBezierShape.Refresh();
@@ -39,7 +39,7 @@ namespace Game.Scripts.Behaviours
             _meshCollider.convex = true;
         }
 
-        private List<pb_BezierPoint> BeizerListCreate(List<Vector2> points)
+        private List<pb_BezierPoint> CreateBezierList(List<Vector2> points)
         {
             List<pb_BezierPoint> beizerPoints = new List<pb_BezierPoint>();
             for (int i = 0; i < points.Count; i++)
@@ -47,6 +47,18 @@ namespace Game.Scripts.Behaviours
                 beizerPoints.Add(new pb_BezierPoint(points[i], points[i], points[i], Quaternion.identity));
             }
             return beizerPoints;
+        }
+
+        public void PlaceWheels(Transform parent, pb_BezierShape pathObject)
+        {
+            //Vector3 frontPos = pathObject.m_Points[pathObject.m_Points.Count - 1].position * parent.localScale.x;
+            //frontPos.z = frontPos.x;
+            //frontPos.x = 0;
+            //Vector3 backPos = pathObject.m_Points[0].position * 0.005f;
+            //backPos.z = backPos.x;
+            //backPos.x = 0;
+            //GameManager.ins.car.frontWheels.localPosition = frontPos;
+            //GameManager.ins.car.backWheels.localPosition = backPos;
         }
     }
 }

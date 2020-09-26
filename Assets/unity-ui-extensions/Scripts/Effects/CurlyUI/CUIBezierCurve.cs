@@ -21,6 +21,10 @@ namespace UnityEngine.UI.Extensions
             {
                 return controlPoints;
             }
+            set
+            {
+                controlPoints = value;
+            }
 
         }
 

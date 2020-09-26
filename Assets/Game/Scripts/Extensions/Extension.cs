@@ -21,5 +21,23 @@ namespace Game.Scripts.Extensions
             }
             return list;
         }
+
+        public static T First<T>(this T[] array)
+        {
+            return array[0];
+        }
+        public static T First<T>(this List<T> list)
+        {
+            return list[0];
+        }
+
+        public static T Last<T>(this T[] array)
+        {
+            return array[array.Length - 1];
+        }
+        public static T Last<T>(this List<T> list)
+        {
+            return list[list.Count - 1];
+        }
     }
 }
