@@ -267,21 +267,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5117640929223098629, guid: 685a3126de22cc146969b6310aa4ea5b,
-        type: 3}
-      propertyPath: editorData._bezierPath.points.Array.data[8].x
-      value: 44.886353
-      objectReference: {fileID: 0}
-    - target: {fileID: 5117640929223098629, guid: 685a3126de22cc146969b6310aa4ea5b,
-        type: 3}
-      propertyPath: editorData._bezierPath.points.Array.data[9].x
-      value: 53.991314
-      objectReference: {fileID: 0}
-    - target: {fileID: 5117640930028358319, guid: 685a3126de22cc146969b6310aa4ea5b,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 685a3126de22cc146969b6310aa4ea5b, type: 3}
 --- !u!4 &8619322085378782546 stripped

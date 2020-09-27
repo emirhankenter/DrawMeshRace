@@ -7,6 +7,7 @@ namespace Game.Scripts.Behaviours
 {
     public class ChestBehaviour : MonoBehaviour
     {
+        [SerializeField] private ParticleSystem _coinParticle;
         [SerializeField] private GameObject _top;
 
         private bool _isOpen;
@@ -14,7 +15,11 @@ namespace Game.Scripts.Behaviours
         {
             if (!_isOpen)
             {
-                _top.transform.DORotate(new Vector3(90, 0, 0), 1f, RotateMode.LocalAxisAdd);
+                _top.transform.DORotate(new Vector3(90, 0, 0), 1f, RotateMode.LocalAxisAdd)
+                    .OnComplete(() => 
+                    {
+                        _coinParticle.Play();
+                    });
                 _isOpen = true;
             }
         }
@@ -34,6 +39,9 @@ namespace Game.Scripts.Behaviours
             {
                 var rb = collision.gameObject.GetComponentInParent<Rigidbody>();
                 rb.isKinematic = true;
+                gameObject.GetComponent<Collider>().enabled = false;
+
+                transform.DORotate(new Vector3(45, 0, 0), 0.2f, RotateMode.LocalAxisAdd).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutCirc);
                 Open();
             }
         }
