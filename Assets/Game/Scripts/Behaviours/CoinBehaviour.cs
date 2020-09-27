@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Behaviours
@@ -6,6 +7,8 @@ namespace Assets.Game.Scripts.Behaviours
     [RequireComponent(typeof(BoxCollider))]
     public class CoinBehaviour : MonoBehaviour
     {
+        public static event Action CoinCollected;
+
         private BoxCollider _boxCollider;
         private BoxCollider BoxCollider
         {
@@ -37,6 +40,7 @@ namespace Assets.Game.Scripts.Behaviours
         {
             transform.DOKill();
             transform.DOMoveY(transform.position.y + 2, 0.5f).SetEase(Ease.OutExpo).OnComplete(() => Destroy(gameObject));
+            CoinCollected?.Invoke();
         }
 
 

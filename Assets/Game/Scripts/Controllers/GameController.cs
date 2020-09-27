@@ -79,6 +79,8 @@ namespace Assets.Game.Scripts.Controllers
 
         private void OnChestClaimed()
         {
+            PlayerData.Coin += GameConfig.ChestRewardAmount;
+
             ChestBehaviour.ChestClaimed -= OnChestClaimed;
 
             if (CoroutineController.IsCoroutineRunning(FinishRoutineKey))

@@ -59,7 +59,7 @@ namespace Game.Scripts.Behaviours
 
         private void OnLineDrew(List<Vector2> controlPoints)
         {
-            transform.position += Vector3.up * 2;
+            transform.position = _checkPoint;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             if (_rigidBody.isKinematic) _rigidBody.isKinematic = false;
 
@@ -89,7 +89,7 @@ namespace Game.Scripts.Behaviours
                 }
                 if (IsGround())
                 {
-                    _rigidBody.AddForce(transform.forward * Time.deltaTime* 0.1f * _hp, ForceMode.Acceleration);
+                    _rigidBody.AddForce(((transform.forward + Vector3.one * 1.5f) * 0.2f) * Time.deltaTime* 0.1f * _hp, ForceMode.Acceleration);
                 }
             }
             if (_rigidBody.angularVelocity.magnitude > 5)
@@ -128,7 +128,7 @@ namespace Game.Scripts.Behaviours
 
         private void ResetCar()
         {
-            transform.position = _checkPoint;
+            transform.position = _initialPosition;
             transform.rotation = _initialRotation;
             _rigidBody.isKinematic = true;
         }

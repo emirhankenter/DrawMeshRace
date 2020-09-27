@@ -38,7 +38,7 @@ namespace Game.Scripts.Behaviours
 
         public void CreateMesh(List<Vector2> points)
         {
-            points = points.Inverse().Scale(3f);
+            points = points.Inverse().Scale(2f);
             _controlPoints = points;
 
             var bezierPoints = CreateBezierList(points);
@@ -73,14 +73,6 @@ namespace Game.Scripts.Behaviours
 
             //transform.parent.parent.forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized;
             transform.parent.forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized * -1;
-        }
-
-        private void FixedUpdate()
-        {
-            //transform.position = _follow.position;
-            //var rotation = _follow.rotation.eulerAngles;
-            //rotation.y = -90;
-            //transform.rotation = Quaternion.Euler(rotation);
         }
     }
 }
