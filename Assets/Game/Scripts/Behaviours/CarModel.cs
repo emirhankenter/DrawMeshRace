@@ -68,11 +68,14 @@ namespace Game.Scripts.Behaviours
             var back = _controlPoints.First();
             var front = _controlPoints.Last();
 
-            _backWheels.transform.localPosition = new Vector3(0, back.y, back.x) * transform.lossyScale.x;
-            _frontWheels.transform.localPosition = new Vector3(0, front.y, front.x) * transform.lossyScale.x;
+            _backWheels.transform.localPosition = new Vector3(0, front.y, front.x) * transform.lossyScale.x;
+            _frontWheels.transform.localPosition = new Vector3(0, back.y, back.x) * transform.lossyScale.x;
 
-            //transform.parent.parent.forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized;
-            transform.parent.forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized * -1;
+            var forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized * -1;
+
+            transform.parent.forward = forward;
+            _backWheels.parent.forward = forward;
+            _frontWheels.parent.forward = forward;
         }
     }
 }
