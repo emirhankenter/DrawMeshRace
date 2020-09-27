@@ -18,11 +18,16 @@ namespace Game.Scripts.Behaviours
         [SerializeField] private CarModel _carModel;
         [SerializeField] private WheelCollider[] _wheels;
 
+        private Vector3 _checkPoint;
+
         public static Vector3 ForwardVector;
 
         private void Awake()
         {
             Initialize();
+            _checkPoint = transform.position;
+
+            CheckPointTriggerer.CheckPointTriggered += OnCheckPointTriggered;
         }
 
         public void Initialize()
@@ -39,6 +44,7 @@ namespace Game.Scripts.Behaviours
         private void OnLineDrew(List<Vector2> controlPoints)
         {
             transform.position += Vector3.up * 2;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
             if (_rigidBody.isKinematic) _rigidBody.isKinematic = false;
 
             _carModel.CreateMesh(controlPoints);
@@ -93,6 +99,19 @@ namespace Game.Scripts.Behaviours
                 }
                 _maxSpeed /= 2;
             }
+        }
+
+        public void Respawn()
+        {
+            transform.position = _checkPoint;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            _rigidBody.isKinematic = true;
+            _rigidBody.isKinematic = false;
+        }
+
+        private void OnCheckPointTriggered(Vector3 checkpointPosition)
+        {
+            _checkPoint = checkpointPosition;
         }
 
     }

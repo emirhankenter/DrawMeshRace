@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Scripts.Behaviours
 {
-    public class BoostTriggerer : MonoBehaviour
+    public class RespawnTriggerer : MonoBehaviour
     {
         private BoxCollider _boxCollider;
         private BoxCollider BoxCollider
@@ -19,18 +19,16 @@ namespace Game.Scripts.Behaviours
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerExit(Collider other)
         {
-            Debug.Log("Hmmmm");
             if (other.CompareTag("Wheel"))
             {
-                Debug.Log("Boost");
-                var rb = other.GetComponentInParent<Rigidbody>();
+                Debug.Log("Respawn");
                 var car = other.GetComponentInParent<CarBehaviour>();
 
-                if (!rb && !car) return;
+                if (!car) return;
 
-                car.Boost();
+                car.Respawn();
             }
         }
 

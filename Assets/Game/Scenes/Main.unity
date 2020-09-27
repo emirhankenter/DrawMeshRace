@@ -722,7 +722,7 @@ GameObject:
   - component: {fileID: 911254667}
   m_Layer: 8
   m_Name: FrontWheels
-  m_TagString: Body
+  m_TagString: Wheel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

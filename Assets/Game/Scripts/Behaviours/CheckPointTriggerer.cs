@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace Game.Scripts.Behaviours
 {
-    public class BoostTriggerer : MonoBehaviour
+    public delegate void CheckPointDelegate(Vector3 checkpointPosition);
+    public class CheckPointTriggerer : MonoBehaviour
     {
+        public static event CheckPointDelegate CheckPointTriggered;
+
         private BoxCollider _boxCollider;
         private BoxCollider BoxCollider
         {
@@ -21,16 +24,14 @@ namespace Game.Scripts.Behaviours
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Hmmmm");
-            if (other.CompareTag("Wheel"))
+            if (other.CompareTag("Body"))
             {
                 Debug.Log("Boost");
-                var rb = other.GetComponentInParent<Rigidbody>();
                 var car = other.GetComponentInParent<CarBehaviour>();
 
-                if (!rb && !car) return;
+                CheckPointTriggered?.Invoke(transform.position);
 
-                car.Boost();
+                if (!car) return;
             }
         }
 
