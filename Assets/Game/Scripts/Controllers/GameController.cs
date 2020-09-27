@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mek.Controllers;
+using Game.Scripts.Models;
 
 namespace Assets.Game.Scripts.Controllers
 {
@@ -17,6 +18,9 @@ namespace Assets.Game.Scripts.Controllers
 
         [SerializeField] private List<LevelBehaviour> _levels;
 
+        public static float FinishTimerAfterFinishLinePassed = 5f;
+        private string FinishRoutineKey => $"FinishRoutine{GetInstanceID()}";
+
         private void Awake()
         {
             PrepareLevel();
@@ -24,17 +28,18 @@ namespace Assets.Game.Scripts.Controllers
 
         private void PrepareLevel()
         {
-            CurrentLevel = Instantiate(_levels[0]);
+            CurrentLevel = Instantiate(_levels[(PlayerData.Level - 1) % _levels.Count]);
             CurrentLevel.Initialize();
 
             GameStarted?.Invoke();
 
             ViewController.Instance.InGameView.Open(new InGameViewParameters());
+
+            FinishLineBehaviour.FinishLinePassed += OnFinishLinePassed;
         }
 
         private void DisposeLevel()
         {
-
             Destroy(CurrentLevel.gameObject);
 
             CoroutineController.DoAfterGivenTime(1f, () =>
@@ -47,14 +52,61 @@ namespace Assets.Game.Scripts.Controllers
         private void OnGameOver()
         {
             ViewController.Instance.InGameView.Close();
-            ViewController.Instance.GameOverView.Open(new GameOverViewParameters());
+            ViewController.Instance.GameOverView.Open(new GameOverViewParameters(PlayerData.Level * 50, OnGameOverViewCompleted));
+
+            PlayerData.Level++;
+
             GameOver?.Invoke();
         }
 
-        private void OnRestart()
+        private void NextLevel()
         {
             DisposeLevel();
         }
+
+        #region Helpers
+
+        private void OnFinishLinePassed()
+        {
+            FinishLineBehaviour.FinishLinePassed -= OnFinishLinePassed;
+
+            ChestBehaviour.ChestClaimed += OnChestClaimed;
+
+            CoroutineController.StartCoroutine(FinishRoutineKey, FinishRoutine());
+        }
+
+        private void OnChestClaimed()
+        {
+            ChestBehaviour.ChestClaimed -= OnChestClaimed;
+
+            if (CoroutineController.IsCoroutineRunning(FinishRoutineKey))
+            {
+                CoroutineController.StopThisCoroutine(FinishRoutineKey);
+            }
+
+            CoroutineController.DoAfterGivenTime(2f, OnGameOver);
+
+            Debug.Log("ChestClaimed");
+        }
+
+        private IEnumerator FinishRoutine()
+        {
+            var timer = FinishTimerAfterFinishLinePassed;
+            while (timer > 0)
+            {
+                timer -= Time.fixedDeltaTime;
+                yield return null;
+            }
+
+            OnGameOver();
+        }
+
+        private void OnGameOverViewCompleted()
+        {
+            NextLevel();
+        }
+
+        #endregion
 
         #region Singleton
 

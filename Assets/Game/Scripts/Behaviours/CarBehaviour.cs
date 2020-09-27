@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Scripts.Extensions;
+using Assets.Game.Scripts.Controllers;
 
 namespace Game.Scripts.Behaviours
 {
@@ -34,6 +35,7 @@ namespace Game.Scripts.Behaviours
         {
             _carModel.Initialize();
             UiDraw.LineDrew += OnLineDrew;
+            GameController.GameOver += Brake;
         }
 
         public void Dispose()
@@ -98,6 +100,15 @@ namespace Game.Scripts.Behaviours
                     yield return null;
                 }
                 _maxSpeed /= 2;
+            }
+        }
+
+        private void Brake()
+        {
+            GameController.GameOver -= Brake;
+            foreach (var wheel in _wheels)
+            {
+                wheel.brakeTorque = 100;
             }
         }
 

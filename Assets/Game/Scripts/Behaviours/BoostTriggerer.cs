@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Scripts.Behaviours
 {
@@ -21,16 +19,15 @@ namespace Game.Scripts.Behaviours
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Hmmmm");
             if (other.CompareTag("Wheel"))
             {
-                Debug.Log("Boost");
                 var rb = other.GetComponentInParent<Rigidbody>();
                 var car = other.GetComponentInParent<CarBehaviour>();
 
                 if (!rb && !car) return;
 
                 car.Boost();
+                Debug.Log("Boosted");
             }
         }
 

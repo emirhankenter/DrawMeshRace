@@ -1,6 +1,4 @@
 ﻿using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Game.Scripts.Behaviours
@@ -31,8 +29,6 @@ namespace Assets.Game.Scripts.Behaviours
         {
             if (other.CompareTag("Body"))
             {
-                Debug.Log("Coin Collected");
-
                 Collect();
             }
         }

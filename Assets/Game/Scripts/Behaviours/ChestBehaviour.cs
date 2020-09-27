@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace Game.Scripts.Behaviours
 {
     public class ChestBehaviour : MonoBehaviour
     {
+        public static event Action ChestClaimed;
+
         [SerializeField] private ParticleSystem _coinParticle;
         [SerializeField] private GameObject _top;
 
@@ -19,6 +22,7 @@ namespace Game.Scripts.Behaviours
                     .OnComplete(() => 
                     {
                         _coinParticle.Play();
+                        ChestClaimed?.Invoke();
                     });
                 _isOpen = true;
             }
