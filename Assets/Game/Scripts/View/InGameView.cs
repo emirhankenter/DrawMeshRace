@@ -14,6 +14,7 @@ namespace Game.Scripts.View
     {
         [SerializeField] private UiDraw _uiDrawView;
         [SerializeField] private CoinElement _coinElement;
+        [SerializeField] private LevelElement _levelElement;
 
         public override void Open(ViewParameters parameters)
         {
@@ -59,6 +60,7 @@ namespace Game.Scripts.View
         {
             _uiDrawView.gameObject.SetActive(true);
             _coinElement.Initialize(PlayerData.Coin);
+            _levelElement.Initialize();
         }
 
         private void DisposeElements()
