@@ -292,6 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6384126215659042252}
+  - component: {fileID: 7257664368923377298}
   m_Layer: 0
   m_Name: Road2
   m_TagString: Untagged
@@ -316,3 +317,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7257664368923377298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6384126215659042253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb348641b59ef2d4e9cb41b0cd39ac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roadMeshCreator: {fileID: 6384126215425627822}
+  _meshFilter: {fileID: 6384126215157243139}
+  _meshCollider: {fileID: 6384126215157243149}

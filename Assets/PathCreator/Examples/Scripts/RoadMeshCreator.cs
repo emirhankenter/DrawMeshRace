@@ -150,6 +150,10 @@ namespace PathCreation.Examples {
                 meshRenderer.sharedMaterials[0].mainTextureScale = new Vector3 (1, textureTiling);
             }
         }
+        public void UpdatePath()
+        {
+            PathUpdated();
+        }
 
     }
 }

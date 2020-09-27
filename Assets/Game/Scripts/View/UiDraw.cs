@@ -18,7 +18,7 @@ namespace Game.Scripts.View
         [SerializeField] private InputController _input;
         [SerializeField] private UILineTextureRenderer _lineRenderer;
 
-        public float TwoPointMaxDis = 0.3f;
+        public float TwoPointMaxDis = 50f;
 
         private List<Vector2> _touchPositions = new List<Vector2>();
 

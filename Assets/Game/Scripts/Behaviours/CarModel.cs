@@ -13,6 +13,8 @@ namespace Game.Scripts.Behaviours
         [SerializeField] private Transform _frontWheels;
         [SerializeField] private Transform _backWheels;
 
+        [SerializeField] private Material _bodyMaterial;
+
         private List<Vector2> _controlPoints;
 
         private MeshFilter _meshFilter;
@@ -47,6 +49,7 @@ namespace Game.Scripts.Behaviours
             Mesh sharedMesh = _meshFilter.sharedMesh;
             _meshCollider.sharedMesh = sharedMesh;
             _meshCollider.convex = true;
+            _meshRenderer.material = _bodyMaterial;
         }
 
         private List<pb_BezierPoint> CreateBezierList(List<Vector2> points)
