@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4501952892935957600}
-  - component: {fileID: 8863245159134185337}
+  - component: {fileID: 5470320569569455492}
   - component: {fileID: 4470753985746545491}
   m_Layer: 9
   m_Name: Wheel
@@ -38,7 +38,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!146 &8863245159134185337
+--- !u!146 &5470320569569455492
 WheelCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eeba6bc7d21cb64a8687abcbf4b7851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wheelCollider: {fileID: 8863245159134185337}
+  _wheelCollider: {fileID: 5470320569569455492}
 --- !u!1 &1802363454142860367
 GameObject:
   m_ObjectHideFlags: 0

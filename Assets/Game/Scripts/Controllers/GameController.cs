@@ -16,6 +16,7 @@ namespace Assets.Game.Scripts.Controllers
 
         public LevelBehaviour CurrentLevel;
 
+        [SerializeField] private CarBehaviour _car;
         [SerializeField] private List<LevelBehaviour> _levels;
 
         public static float FinishTimerAfterFinishLinePassed = 5f;
@@ -30,6 +31,7 @@ namespace Assets.Game.Scripts.Controllers
         {
             CurrentLevel = Instantiate(_levels[(PlayerData.Level - 1) % _levels.Count]);
             CurrentLevel.Initialize();
+            _car.Initialize();
 
             GameStarted?.Invoke();
 
@@ -40,10 +42,10 @@ namespace Assets.Game.Scripts.Controllers
 
         private void DisposeLevel()
         {
-            Destroy(CurrentLevel.gameObject);
-
             CoroutineController.DoAfterGivenTime(1f, () =>
             {
+                Destroy(CurrentLevel.gameObject);
+                _car.Dispose();
                 ViewController.Instance.GameOverView.Close();
                 PrepareLevel();
             });

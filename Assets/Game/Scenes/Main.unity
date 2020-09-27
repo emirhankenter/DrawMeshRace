@@ -120,6 +120,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!146 &62224511 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 5470320569569455492, guid: 43e307a0db43bba4e85ae73851602519,
+    type: 3}
+  m_PrefabInstance: {fileID: 1931223414}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &127221846
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,12 +332,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284978609}
   m_CullTransparentMesh: 0
---- !u!146 &297648203 stripped
-WheelCollider:
-  m_CorrespondingSourceObject: {fileID: 8863245159134185337, guid: 43e307a0db43bba4e85ae73851602519,
-    type: 3}
-  m_PrefabInstance: {fileID: 8863245159393462066}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &303667436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,11 +1631,11 @@ MonoBehaviour:
   _input: {fileID: 1367887318}
   _lineRenderer: {fileID: 284978611}
   TwoPointMaxDis: 20
---- !u!146 &1418719193 stripped
+--- !u!146 &1376638539 stripped
 WheelCollider:
-  m_CorrespondingSourceObject: {fileID: 8863245159134185337, guid: 43e307a0db43bba4e85ae73851602519,
+  m_CorrespondingSourceObject: {fileID: 5470320569569455492, guid: 43e307a0db43bba4e85ae73851602519,
     type: 3}
-  m_PrefabInstance: {fileID: 1891572338}
+  m_PrefabInstance: {fileID: 1929289110}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1499446492
 GameObject:
@@ -1918,14 +1918,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46fb8aaa33038e44e90645273d9b25de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _torque: 2000
+  _torque: 30000
   _hp: 1500
   _maxSpeed: 50
   _rigidBody: {fileID: 1805281139}
   _carModel: {fileID: 723512265}
   _wheels:
-  - {fileID: 297648203}
-  - {fileID: 1418719193}
+  - {fileID: 62224511}
+  - {fileID: 1376638539}
 --- !u!54 &1805281139
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1934,14 +1934,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805281136}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 5000
   m_Drag: 0.02
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 98
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!1001 &1809379788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2047,7 +2047,7 @@ PrefabInstance:
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
@@ -2111,6 +2111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1895038652}
+  - component: {fileID: 1895038653}
   m_Layer: 0
   m_Name: BackWheels
   m_TagString: Untagged
@@ -2134,6 +2135,19 @@ Transform:
   m_Father: {fileID: 1238502804}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1895038653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895038651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.4, z: 0.4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1908167002
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,6 +2180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentLevel: {fileID: 0}
+  _car: {fileID: 1805281138}
   _levels:
   - {fileID: 510655783301672194, guid: ef70a722aa2ec4c4fab5c7b54bfe4c23, type: 3}
   - {fileID: 510655783301672194, guid: 501f4d4597f65cb489c306b09958d4e3, type: 3}
@@ -2228,7 +2243,7 @@ PrefabInstance:
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.059999943
       objectReference: {fileID: 0}
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
@@ -2303,7 +2318,7 @@ PrefabInstance:
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.059999943
       objectReference: {fileID: 0}
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
@@ -2748,7 +2763,7 @@ PrefabInstance:
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.059999943
       objectReference: {fileID: 0}
     - target: {fileID: 4501952892935957600, guid: 43e307a0db43bba4e85ae73851602519,
         type: 3}

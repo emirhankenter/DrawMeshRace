@@ -20,27 +20,41 @@ namespace Game.Scripts.Behaviours
         [SerializeField] private WheelCollider[] _wheels;
 
         private Vector3 _checkPoint;
+        private Vector3 _initialPosition;
+        private Quaternion _initialRotation;
 
         public static Vector3 ForwardVector;
 
+        private bool _engineActive;
+
         private void Awake()
         {
-            Initialize();
             _checkPoint = transform.position;
-
-            CheckPointTriggerer.CheckPointTriggered += OnCheckPointTriggered;
+            _initialPosition = transform.position;
+            _initialRotation = transform.rotation;
         }
 
         public void Initialize()
         {
-            _carModel.Initialize();
+            ResetCar();
+            _checkPoint = transform.position;
             UiDraw.LineDrew += OnLineDrew;
+            CheckPointTriggerer.CheckPointTriggered += OnCheckPointTriggered;
             GameController.GameOver += Brake;
+
+            _engineActive = true;
+
+            foreach (var wheel in _wheels)
+            {
+                wheel.brakeTorque = 0;
+            }
         }
 
         public void Dispose()
         {
             UiDraw.LineDrew -= OnLineDrew;
+            CheckPointTriggerer.CheckPointTriggered -= OnCheckPointTriggered;
+            GameController.GameOver -= Brake;
         }
 
         private void OnLineDrew(List<Vector2> controlPoints)
@@ -67,7 +81,7 @@ namespace Game.Scripts.Behaviours
 
         private void FixedUpdate()
         {
-            if (_rigidBody.velocity.magnitude < _maxSpeed)
+            if (_engineActive && _rigidBody.velocity.magnitude < _maxSpeed)
             {
                 foreach (var wheel in _wheels)
                 {
@@ -108,8 +122,15 @@ namespace Game.Scripts.Behaviours
             GameController.GameOver -= Brake;
             foreach (var wheel in _wheels)
             {
-                wheel.brakeTorque = 100;
+                wheel.brakeTorque = 1000;
             }
+        }
+
+        private void ResetCar()
+        {
+            transform.position = _checkPoint;
+            transform.rotation = _initialRotation;
+            _rigidBody.isKinematic = true;
         }
 
         public void Respawn()
@@ -118,6 +139,11 @@ namespace Game.Scripts.Behaviours
             transform.rotation = Quaternion.Euler(0, 0, 0);
             _rigidBody.isKinematic = true;
             _rigidBody.isKinematic = false;
+        }
+
+        public void Stop()
+        {
+            _engineActive = false;
         }
 
         private void OnCheckPointTriggered(Vector3 checkpointPosition)

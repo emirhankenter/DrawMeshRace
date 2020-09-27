@@ -44,5 +44,29 @@ namespace Game.Scripts.Extensions
         {
             return (180 / Mathf.PI) * raidans;
         }
+
+        public static List<Vector2> Inverse(this List<Vector2> list)
+        {
+            var tempList = new List<Vector2>();
+
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                tempList.Add(list[i]);
+            }
+
+            return tempList;
+        }
+
+        public static List<Vector2> Scale(this List<Vector2> list, float factor)
+        {
+            var tempList = new List<Vector2>();
+
+            foreach (var item in list)
+            {
+                tempList.Add(item * factor);
+            }
+
+            return tempList;
+        }
     }
 }

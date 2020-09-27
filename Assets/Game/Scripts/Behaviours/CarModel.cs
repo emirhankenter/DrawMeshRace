@@ -25,7 +25,7 @@ namespace Game.Scripts.Behaviours
         private pb_BezierShape _pbBezierShape;
         private pb_Entity _pbEntity;
 
-        public void Initialize()
+        private void Awake()
         {
             _meshFilter = gameObject.GetComponent<MeshFilter>();
             _meshRenderer = gameObject.GetComponent<MeshRenderer>();
@@ -38,6 +38,7 @@ namespace Game.Scripts.Behaviours
 
         public void CreateMesh(List<Vector2> points)
         {
+            points = points.Inverse().Scale(3f);
             _controlPoints = points;
 
             var bezierPoints = CreateBezierList(points);

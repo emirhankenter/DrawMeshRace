@@ -43,7 +43,16 @@ namespace Game.Scripts.Behaviours
             {
                 var rb = collision.gameObject.GetComponentInParent<Rigidbody>();
                 rb.isKinematic = true;
+                rb.isKinematic = false;
+                var car = rb.GetComponent<CarBehaviour>();
+
+                if (!car) return;
+
+                car.Stop();
+
                 gameObject.GetComponent<Collider>().enabled = false;
+
+                rb.AddForceAtPosition(Vector3.up * 20000f, collision.contacts[0].point, ForceMode.Impulse);
 
                 transform.DORotate(new Vector3(45, 0, 0), 0.2f, RotateMode.LocalAxisAdd).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutCirc);
                 Open();
