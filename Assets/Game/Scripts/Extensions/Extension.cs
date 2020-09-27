@@ -39,5 +39,10 @@ namespace Game.Scripts.Extensions
         {
             return list[list.Count - 1];
         }
+
+        public static float RadianToDegree(this float raidans)
+        {
+            return (180 / Mathf.PI) * raidans;
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace Game.Scripts.Behaviours
 {
     public class CarModel : MonoBehaviour
     {
+        [SerializeField] private Transform _follow;
+
         [SerializeField] private Transform _frontWheels;
         [SerializeField] private Transform _backWheels;
 
@@ -45,8 +47,6 @@ namespace Game.Scripts.Behaviours
             Mesh sharedMesh = _meshFilter.sharedMesh;
             _meshCollider.sharedMesh = sharedMesh;
             _meshCollider.convex = true;
-
-
         }
 
         private List<pb_BezierPoint> CreateBezierList(List<Vector2> points)
@@ -64,8 +64,19 @@ namespace Game.Scripts.Behaviours
             var back = _controlPoints.First();
             var front = _controlPoints.Last();
 
-            _backWheels.transform.position = new Vector3(0, back.y, back.x) * transform.lossyScale.x;
-            _frontWheels.transform.position = new Vector3(0, front.y, front.x) * transform.lossyScale.x;
+            _backWheels.transform.localPosition = new Vector3(0, back.y, back.x) * transform.lossyScale.x;
+            _frontWheels.transform.localPosition = new Vector3(0, front.y, front.x) * transform.lossyScale.x;
+
+            //transform.parent.parent.forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized;
+            transform.parent.forward = (_frontWheels.transform.localPosition - _backWheels.transform.localPosition).normalized * -1;
+        }
+
+        private void FixedUpdate()
+        {
+            //transform.position = _follow.position;
+            //var rotation = _follow.rotation.eulerAngles;
+            //rotation.y = -90;
+            //transform.rotation = Quaternion.Euler(rotation);
         }
     }
 }

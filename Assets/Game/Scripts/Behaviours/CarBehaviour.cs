@@ -18,6 +18,8 @@ namespace Game.Scripts.Behaviours
         [SerializeField] private CarModel _carModel;
         [SerializeField] private WheelCollider[] _wheels;
 
+        public static Vector3 ForwardVector;
+
         private void Awake()
         {
             Initialize();
@@ -27,8 +29,6 @@ namespace Game.Scripts.Behaviours
         {
             _carModel.Initialize();
             UiDraw.LineDrew += OnLineDrew;
-
-            StartCoroutine(RideRoutine());
         }
 
         public void Dispose()
@@ -38,6 +38,9 @@ namespace Game.Scripts.Behaviours
 
         private void OnLineDrew(List<Vector2> controlPoints)
         {
+            transform.position += Vector3.up * 2;
+            if (_rigidBody.isKinematic) _rigidBody.isKinematic = false;
+
             _carModel.CreateMesh(controlPoints);
             _carModel.PlaceWheels();
         }
@@ -54,36 +57,41 @@ namespace Game.Scripts.Behaviours
             return false;
         }
 
-        private IEnumerator RideRoutine()
+        private void FixedUpdate()
         {
-            while (true)
+            if (_rigidBody.velocity.magnitude < _maxSpeed)
             {
                 foreach (var wheel in _wheels)
                 {
-                    //wheel.motorTorque = Time.fixedDeltaTime * _torque;
-                }
-
-                yield return new WaitForFixedUpdate();
-            }
-        }
-
-        private void FixedUpdate()
-        {
-
-            if (_rigidBody.velocity.magnitude < _maxSpeed)
-            {
-                foreach (var item in _wheels)
-                {
-                    item.motorTorque = Time.deltaTime * _torque;
+                    wheel.motorTorque = Time.deltaTime * _torque;
                 }
                 if (IsGround())
                 {
-                    _rigidBody.AddForce(Vector3.forward * Time.deltaTime* 0.1f * _hp, ForceMode.Acceleration);
+                    _rigidBody.AddForce(transform.forward * Time.deltaTime* 0.1f * _hp, ForceMode.Acceleration);
                 }
             }
             if (_rigidBody.angularVelocity.magnitude > 5)
             {
                 _rigidBody.angularVelocity = Vector3.Lerp(_rigidBody.angularVelocity, Vector3.zero, Time.deltaTime * 10f);
+            }
+
+            Debug.DrawRay(transform.position, transform.forward * 1000, Color.red, Time.fixedDeltaTime);
+        }
+
+        public void Boost()
+        {
+            StartCoroutine(BoostRoutine());
+
+            IEnumerator BoostRoutine(float timer = 0.5f)
+            {
+                _maxSpeed *= 2;
+                while (timer > 0)
+                {
+                    _rigidBody.AddForce(Vector3.Lerp(_rigidBody.velocity, transform.forward * 10, Time.deltaTime * 1000), ForceMode.VelocityChange);
+                    timer--;
+                    yield return null;
+                }
+                _maxSpeed /= 2;
             }
         }
 
